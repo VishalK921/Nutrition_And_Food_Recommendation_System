@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Survey</title>
+    <style>
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #7091e6;
+            --background-color: #ffffff;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 60px 0 0; /* Increased top padding to match nav bar height */
+            color: var(--primary-color);
+            background: url('/static/yo.png') no-repeat center center fixed;
+            background-size: cover;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            padding: 10px;
+        }
+        nav a {
+            color: #ffffff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 60px); /* Adjusted height to account for nav bar */
+            padding-top: 20px; /* Added padding to the top of the container */
+        }
+        .home, .form-page {
+            display: none;
+            width: 100%;
+            max-width: 1000px;
+            padding: 20px;
+            box-sizing: border-box;
+            border-radius: 10px;
+        }
+        .home {
+            display: flex;
+        }
+        .home > div {
+            flex: 1;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .home .intro {
+            text-align: left;
+            color: #ffffff;
+            font-size: 2em;
+        }
+        .home .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .home .button-container button {
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border:  2px solid #ffffff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .home .button-container button:hover {
+            background-color: #2bff00;
+            color: #000000;
+            border:  2px solid #000000;
+            transition: 0.2s;
+        }
+        form {
+            background: transparent;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border: 2px solid #ffffff;
+            width: 80%;
+            max-width: 800px; /* Increased max width */
+            margin: 0 auto;
+            color: #ffffff;
+        }
+        form label {
+            color: #ffffff;
+            font-weight: bold;
+            white-space: nowrap; /* Prevent label text from wrapping */
+          
+        }
+        form select {
+            background-color: transparent;
+            color: #ffffff;
+            border: 1px solid #ffffff;
+            border-radius: 4px;
+            padding: 6px;
+            margin-bottom: 12px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        form input[type="number"] {
+            background-color: transparent;
+            color: #ffffff;
+            border: 1px solid #ffffff;
+            border-radius: 4px;
+            padding: 6px;
+            margin-bottom: 12px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        h1 {
+            margin-bottom: 10px;
+            font-size: 20px;
+            color: #ffffff;
+            text-align: center;
+        }
+        .form-group {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .form-group > div {
+            flex: 1 1 45%;
+            margin: 10px;
+        }
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 6px;
+            margin-bottom: 12px;
+            border: 1px solid var(--primary-color);
+            border-radius: 4px;
+            box-sizing: border-box;
+            background: #ffffff;
+            color: var(--primary-color);
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 8px;
+            background-color: #2bff00;
+            border: none;
+            border-radius: 4px;
+            color: rgb(0, 0, 0);
+            font-size: 14px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: var(--primary-color);
+        }
+    </style>
+    <script>
+        function showPage(page) {
+            document.querySelector('.home').style.display = 'none';
+            document.querySelector('.form-page').style.display = 'none';
+            document.querySelector(`.${page}`).style.display = 'block';
+        }
+        window.onload = function() {
+            document.querySelector('#homeLink').onclick = function() {
+                showPage('home');
+            };
+            document.querySelector('#formLink').onclick = function() {
+                showPage('form-page');
+            };
+            document.querySelector('#dietPlanButton').onclick = function() {
+                showPage('form-page');
+            };
+        };
+    </script>
+</head>
+<body>
+    <nav>
+        <a href="#" id="homeLink">Home</a>
+        <a href="#" id="formLink">Form</a>
+    </nav>
+    <div class="container">
+        <div class="home">
+            <div class="intro">
+                <h2>Welcome to the Health Survey</h2>
+                <p>This survey will help you understand your dietary habits and provide recommendations for a healthier lifestyle. Fill out the form to get a personalized diet plan.</p>
+            </div>
+            <div class="button-container">
+                <button id="dietPlanButton">Click to get diet plan</button>
+            </div>
+        </div>
+        <div class="form-page">
+            <form action="/result" method="POST">
+                <h1>Health Survey Form</h1>
+                <div class="form-group">
+                    <div>
+                        <label for="Gender">Gender:</label>
+                        <select id="Gender" name="Gender">
+                            <option value="">Select</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="Age">Age:</label>
+                        <input type="number" id="Age" name="Age">
+                    </div>
+                    <div>
+                        <label for="family_history_with_overweight">Family History with Overweight:</label>
+                        <select id="family_history_with_overweight" name="family_history_with_overweight">
+                            <option value="">Select</option>
+                            <option value="yes">yes</option>
+                            <option value="no">no</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="FAVC">Frequent Consumption of High Caloric Food:</label>
+                        <select id="FAVC" name="FAVC">
+                            <option value="">Select</option>
+                            <option value="yes">yes</option>
+                            <option value="no">no</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="FCVC">Frequency of Vegetables Consumption in a Day:</label>
+                        <input type="number" id="FCVC" name="FCVC">
+                    </div>
+                    <div>
+                        <label for="NCP">Number of Main Meals in a Day:</label>
+                        <input type="number" id="NCP" name="NCP">
+                    </div>
+                    <div>
+                        <label for="CAEC">Consumption of Food between Meals:</label>
+                        <select id="CAEC" name="CAEC">
+                            <option value="">Select</option>
+                            <option value="no">No</option>
+                            <option value="Sometimes">Sometimes</option>
+                            <option value="Frequently">Frequently</option>
+                            <option value="Always">Always</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="SMOKE">Smoking Habit:</label>
+                        <select id="SMOKE" name="SMOKE">
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="CH2O">Daily Water Intake (Litre):</label>
+                        <input type="number" id="CH2O" name="CH2O">
+                    </div>
+                    <div>
+                        <label for="SCC">Calories Consumption Monitoring:</label>
+                        <select id="SCC" name="SCC">
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="FAF">Daily Physical Activity Frequency (Hours):</label>
+                        <input type="number" id="FAF" name="FAF">
+                    </div>
+                    <div>
+                        <label for="TUE">Time using Technology Devices daily (Hours):</label>
+                        <input type="number" id="TUE" name="TUE">
+                    </div>
+                    <div>
+                        <label for="CALC">Consumption of Alcohol:</label>
+                        <select id="CALC" name="CALC">
+                            <option value="">Select</option>
+                            <option value="no">No</option>
+                            <option value="Sometimes">Sometimes</option>
+                            <option value="Frequently">Frequently</option>
+                            <option value="Always">Always</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="MTRANS">Transportation Used:</label>
+                        <select id="MTRANS" name="MTRANS">
+                            <option value="">Select</option>
+                            <option value="Automobile">Automobile</option>
+                            <option value="Motorbike">Motorbike</option>
+                            <option value="Bike">Bike</option>
+                            <option value="Walking">Walking</option>
+                            <option value="Public_Transportation">Public Transport</option>
+                        </select>
+                    </div>
+                </div>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+                           
+                                   
+        
