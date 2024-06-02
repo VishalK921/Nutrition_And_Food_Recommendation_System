@@ -6,14 +6,13 @@ from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import train_test_split
 import pickle
 import pandas as pd
-model=pickle.load(open('static/classification_model.pkl','rb'))
+model=pickle.load(open('static/new_classification_model.pkl','rb'))
 
 def Transform_data(fr):
   df=pd.read_csv(r"static/ObesityDataSet_raw_and_data_sinthetic.csv")
-  df = df.drop(columns=['Height', 'Weight'])
   X=df.drop(['NObeyesdad'],axis=1)
   Y=df[['NObeyesdad']]
-  numerical_cols=['Age', 'FCVC', 'NCP', 'CH2O', 'FAF', 'TUE']
+  numerical_cols=['Age', 'Height', 'Weight', 'FCVC', 'NCP', 'CH2O', 'FAF', 'TUE']
   categorical_cols=['Gender', 'family_history_with_overweight', 'FAVC', 'CAEC', 'SMOKE','SCC', 'CALC', 'MTRANS']
   Gender_cat=['Male','Female']
   family_history_with_overweight_cat=['yes','no']
@@ -36,7 +35,7 @@ def Transform_data(fr):
       ('scaler',StandardScaler())
       ]
   )
-  preprocessor=ColumnTransformer([
+  preprocessor = ColumnTransformer([
   ('num_pipeline',num_pipeline,numerical_cols),
   ('cat_pipeline',cat_pipeline,categorical_cols)
   ])

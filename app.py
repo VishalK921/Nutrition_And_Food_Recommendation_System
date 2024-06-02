@@ -12,6 +12,8 @@ def upload():
         w= {
             "Gender": request.form['Gender'],
             "Age": request.form['Age'],
+            "Height": request.form['Height'],
+            "Weight": request.form['Weight'],
             "family_history_with_overweight": request.form['family_history_with_overweight'],
             "FAVC": request.form['FAVC'],
             "FCVC": request.form['FCVC'],
